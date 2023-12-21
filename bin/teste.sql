@@ -1,0 +1,18 @@
+create table TURMA(
+ id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+ ALUNO varchar(50),
+ PERIODO varchar(50),
+ MATRICULA varchar(50),
+
+ FOREIGN KEY (id_TURMA) REFERENCES TURMA(id)
+
+),
+create table PROFESSOR(
+ id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+ ALUNO varchar(50),
+ PERIODO varchar(50),
+ MATRICULA varchar(50),
+
+ FOREIGN KEY (id_PROFESSOR) REFERENCES PROFESSOR(id)
+
+),
