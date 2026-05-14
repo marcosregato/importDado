@@ -4,8 +4,18 @@ import com.codoid.products.fillo.Connection;
 import com.codoid.products.fillo.Fillo;
 import com.codoid.products.fillo.Recordset;
 
+
+
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import java.io.File;
 
 public class SqlExcel {
 
@@ -96,21 +106,103 @@ public class SqlExcel {
             System.err.println("Erro na deleteAba_1: " + e.getMessage());
         } finally {
             try {
-                if (connection != null) connection.close();
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (Exception e) {
                     // Ignore close errors
+                    e.printStackTrace();
             }
+        }
+    }
+
+    /*
+    Posso usar o metodo salvarAba_1 para salvar um objeto Aba1(nome da tabela SQL) no excel
+    public void salvarAba_1(Aba1 aba1) {
+        
+        try{
+            Fillo fillo = new Fillo();
+            Connection connection = fillo.getConnection(pathExcel);
+            String insert = "INSERT INTO " + ABA_1 + " (fruta, nome, cidade, ativo) VALUES ('" + aba1.getFruta() + "', '" + aba1.getNome() + "', '" + aba1.getCidade() + "', '" + aba1.getAtivo() + "')";
+            connection.executeUpdate(insert);
+        }catch(Exception e){
+            System.err.println("Erro na salvarAba_1: " + e.getMessage());
+        }
+    }
+    */
+
+    //TODO: A ultima coluna da planilha do excel da aba 1
+    public void getUltimaColunaPlanilha(){
+        try {
+            FileInputStream arq = new FileInputStream(new File(pathExcel));
+            Workbook workbook = new HSSFWorkbook(arq);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            Row row = sheet.getRow(0);
+
+            if(row != null){
+                int valorDaUltimaColuna = row.getLastCellNum() - 1;
+                Cell nomeDaUltimaColuna = row.getCell(valorDaUltimaColuna);
+                System.out.println("Nome da coluna " + nomeDaUltimaColuna.getStringCellValue());
+                System.out.println("Indece da coluna: " + valorDaUltimaColuna);
+            }
+
+            workbook.close();
+            arq.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     * Adicionar duas colunas no final da ABA_1 com nome "ID" e "ATIVO"
+     * Lembrando que na coluna ATIVO deve receber o valor 0(zero) ou 1(um)
+     * a coluna ID deve ser incrementada automaticamente
+     */
+    public void adicionarColunaIdEAtivo() {
+
+    }
+
+    /**
+     * Na coluna ATIVO deve ter o valor 1, para todos os registros
+     */
+    public void setValorAtivo() {
+
+    }
+
+
+    // TODO: criar um metodo criar um coluna no excel para ser ID da linha e incrementar automaticamente
+    public int crarIdDaLinha() {
+
+        return 0;
+    }
+
+
+
+    public void salvarAba_1() {
+        // TODO: Implementar salvamento da aba 1
+        try{
+            Fillo fillo = new Fillo();
+            Connection connection = fillo.getConnection(pathExcel);
+            String insert = "INSERT INTO " + ABA_1 + " (fruta, nome, cidade, ativo) VALUES ('uva', 'Uva', 'São Paulo', '1')";
+            connection.executeUpdate(insert);
+        }catch(Exception e){
+            System.err.println("Erro na salvarAba_1: " + e.getMessage());
         }
     }
 
     public static void main(String[] args) {
         SqlExcel sqlExcel = new SqlExcel();
-        System.out.println(sqlExcel.buscarAba_1("banana"));
+        
+        
+        /*System.out.println(sqlExcel.buscarAba_1("banana"));
         sqlExcel.updateAba_1("laranja");
         sqlExcel.deleteAba_1("morango", "0");
         List<String> resultados = sqlExcel.listSelectAba_1();
         for (int x = 0; x < resultados.size(); x++) {
             System.out.println("Linha => " + resultados.get(x));
-        }
+        }*/
+        sqlExcel.getUltimaColunaPlanilha();
     }
 }
