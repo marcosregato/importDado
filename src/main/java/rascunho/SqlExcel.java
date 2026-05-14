@@ -7,10 +7,12 @@ import com.codoid.products.fillo.Recordset;
 
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -148,6 +150,34 @@ public class SqlExcel {
      * a coluna ID deve ser incrementada automaticamente
      */
     public void adicionarColunaIdEAtivo() {
+        try {
+            FileInputStream arq = new FileInputStream(new File(pathExcel));
+            Workbook workbook = new XSSFWorkbook(arq);
+            
+
+            Sheet sheet = workbook.getSheetAt(0);
+            //int linha = sheet.getLastRowNum();
+
+            Row row = sheet.getRow(0);
+            if (row != null){
+                row= sheet.createRow(0);
+            }
+
+            int contColuna = row.getLastCellNum();
+            Cell cellID = row.createCell(contColuna);
+            cellID.setCellValue("ID");
+
+            Cell cellAtivo = row.createCell(contColuna + 1);
+            cellAtivo.setCellValue("ATIVO");
+
+            FileOutputStream escreverArquivo = new FileOutputStream(pathExcel);
+            workbook.write(escreverArquivo);
+            System.out.println("Colunas adicionadas com sucesso!");
+            escreverArquivo.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -168,6 +198,22 @@ public class SqlExcel {
         return 0;
     }
 
+    /**
+     * Esse coluna é a Primary Key da tabela SQL 
+     * @return
+     */
+    public int getValorIdDaLinha(String nomeDaTabela) {
+        return 0;
+    }
+
+
+    /**
+     * Essa coluna é Foriegn Key da tabela SQL
+     */
+    public int getValorForeignKeyDaTabela() {
+        return 0;
+    }
+
 /*
     Posso usar o metodo salvarAba_1 para salvar um objeto Aba1(nome da tabela SQL) no excel
     public void salvarAba_1(Aba1 aba1) {
@@ -183,11 +229,11 @@ public class SqlExcel {
     }
     */
 
-    public void salvarAba_1() {
+    public void salvarAba_1(String fruta, String nome, String cidade, String ativo) {
         try{
             Fillo fillo = new Fillo();
             Connection connection = fillo.getConnection(pathExcel);
-            String insert = "INSERT INTO " + ABA_1 + " (fruta, nome, cidade, ativo) VALUES ('uva', 'Uva', 'São Paulo', '1')";
+            String insert = "INSERT INTO " + ABA_1 + " (fruta, nome, cidade, ativo) VALUES ('"+fruta+"', '"+nome+"', '"+cidade+"', '"+ativo+"')";
             connection.executeUpdate(insert);
         }catch(Exception e){
             System.err.println("Erro na salvarAba_1: " + e.getMessage());
