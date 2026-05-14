@@ -116,20 +116,7 @@ public class SqlExcel {
         }
     }
 
-    /*
-    Posso usar o metodo salvarAba_1 para salvar um objeto Aba1(nome da tabela SQL) no excel
-    public void salvarAba_1(Aba1 aba1) {
-        
-        try{
-            Fillo fillo = new Fillo();
-            Connection connection = fillo.getConnection(pathExcel);
-            String insert = "INSERT INTO " + ABA_1 + " (fruta, nome, cidade, ativo) VALUES ('" + aba1.getFruta() + "', '" + aba1.getNome() + "', '" + aba1.getCidade() + "', '" + aba1.getAtivo() + "')";
-            connection.executeUpdate(insert);
-        }catch(Exception e){
-            System.err.println("Erro na salvarAba_1: " + e.getMessage());
-        }
-    }
-    */
+    
 
     //TODO: A ultima coluna da planilha do excel da aba 1
     public void getUltimaColunaPlanilha(){
@@ -172,16 +159,31 @@ public class SqlExcel {
     }
 
 
-    // TODO: criar um metodo criar um coluna no excel para ser ID da linha e incrementar automaticamente
+    /**  
+     * criar um metodo criar um coluna no excel para ser ID da linha e incrementar 
+     * automaticamente
+    */
     public int crarIdDaLinha() {
 
         return 0;
     }
 
-
+/*
+    Posso usar o metodo salvarAba_1 para salvar um objeto Aba1(nome da tabela SQL) no excel
+    public void salvarAba_1(Aba1 aba1) {
+        
+        try{
+            Fillo fillo = new Fillo();
+            Connection connection = fillo.getConnection(pathExcel);
+            String insert = "INSERT INTO " + ABA_1 + " (fruta, nome, cidade, ativo) VALUES ('" + aba1.getFruta() + "', '" + aba1.getNome() + "', '" + aba1.getCidade() + "', '" + aba1.getAtivo() + "')";
+            connection.executeUpdate(insert);
+        }catch(Exception e){
+            System.err.println("Erro na salvarAba_1: " + e.getMessage());
+        }
+    }
+    */
 
     public void salvarAba_1() {
-        // TODO: Implementar salvamento da aba 1
         try{
             Fillo fillo = new Fillo();
             Connection connection = fillo.getConnection(pathExcel);
