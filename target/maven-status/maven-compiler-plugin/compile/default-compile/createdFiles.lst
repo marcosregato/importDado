@@ -1,0 +1,7 @@
+util/ExcelReader.class
+util/Utils.class
+rascunho/SqlExcel.class
+util/ConfigManager.class
+manipularArquivo/ManipularArquivo.class
+util/ExcelReader$1.class
+importaDado/CriarTableSQL.class
