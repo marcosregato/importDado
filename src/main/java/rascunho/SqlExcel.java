@@ -227,6 +227,7 @@ public class SqlExcel {
     /**
      * Talvez precise implementar Árvore B+ (B+ Tree) 
      * é uma estrutura de dados baseada em árvores de busca
+     * inserção com divisão de nó (split)
      * Relacionamento 1:1
      */
     public void relacionamentoUmParaUm() {
