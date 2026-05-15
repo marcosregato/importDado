@@ -150,10 +150,13 @@ public class SqlExcel {
      * a coluna ID deve ser incrementada automaticamente
      */
     public void adicionarColunaIdEAtivo() {
+        FileInputStream arq = null;
+        Workbook workbook = null;
+        FileOutputStream escreverArquivo = null;
         try {
-            FileInputStream arq = new FileInputStream(new File(pathExcel));
-            Workbook workbook = new XSSFWorkbook(arq);
-            
+            arq = new FileInputStream(new File(pathExcel));
+            workbook = new XSSFWorkbook(arq);
+
 
             Sheet sheet = workbook.getSheetAt(0);
             //int linha = sheet.getLastRowNum();
@@ -170,13 +173,20 @@ public class SqlExcel {
             Cell cellAtivo = row.createCell(contColuna + 1);
             cellAtivo.setCellValue("ATIVO");
 
-            FileOutputStream escreverArquivo = new FileOutputStream(pathExcel);
+            escreverArquivo = new FileOutputStream(pathExcel);
             workbook.write(escreverArquivo);
             System.out.println("Colunas adicionadas com sucesso!");
-            escreverArquivo.close();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (escreverArquivo != null) escreverArquivo.close();
+                if (workbook != null) workbook.close();
+                if (arq != null) arq.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -214,7 +224,23 @@ public class SqlExcel {
         return 0;
     }
 
-/*
+    /**
+     * Talvez precise implementar Árvore B+ (B+ Tree) 
+     * é uma estrutura de dados baseada em árvores de busca
+     * Relacionamento 1:1
+     */
+    public void relacionamentoUmParaUm() {
+
+    }
+
+    /**
+     * Relacionamento 1:N
+     */
+    public void relacionamentoUmParaMuitos() {
+
+    }
+
+    /*
     Posso usar o metodo salvarAba_1 para salvar um objeto Aba1(nome da tabela SQL) no excel
     public void salvarAba_1(Aba1 aba1) {
         
