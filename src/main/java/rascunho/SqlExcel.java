@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
@@ -125,7 +126,7 @@ public class SqlExcel {
         try {
             FileInputStream arq = new FileInputStream(new File(pathExcel));
             Workbook workbook = new HSSFWorkbook(arq);
-            Sheet sheet = workbook.getSheetAt(0);
+            Sheet sheet = workbook.getSheet(ABA_1);
 
             Row row = sheet.getRow(0);
 
@@ -158,7 +159,7 @@ public class SqlExcel {
             workbook = new XSSFWorkbook(arq);
 
 
-            Sheet sheet = workbook.getSheetAt(0);
+            Sheet sheet = workbook.getSheet(ABA_1);
             //int linha = sheet.getLastRowNum();
 
             Row row = sheet.getRow(0);
@@ -203,9 +204,25 @@ public class SqlExcel {
      * criar um metodo criar um coluna no excel para ser ID da linha e incrementar 
      * automaticamente
     */
-    public int crarIdDaLinha() {
+    public String crarIdDaLinha(int numeroDaLinha) {
 
-        return 0;
+        return String.valueOf(numeroDaLinha +1 );
+    }
+
+    /**
+     * Tem que definir qual será o ID da linha
+     *
+     */
+    public void addIdDaLinha() {
+        try {
+            FileInputStream fis = new FileInputStream(new File(pathExcel));
+            Workbook workbook = WorkbookFactory.create(fis);
+            Sheet sheet = workbook.getSheet(ABA_1);
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -281,3 +298,5 @@ public class SqlExcel {
         sqlExcel.getUltimaColunaPlanilha();
     }
 }
+
+
